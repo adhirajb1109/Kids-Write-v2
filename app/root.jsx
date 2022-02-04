@@ -8,6 +8,12 @@ export const links = () => [{
 {
   rel: "icon",
   href: "https://i.ibb.co/Vt9YZRD/crayon.png"
+},
+{
+  rel: "stylesheet",
+  href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css", integrity: "sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==",
+  crossorigin: "anonymous",
+  referrerpolicy: "no-referrer"
 }]
 export const meta = () => {
   const description = 'Kids Write is a blogging platform for kids , where kids can share their knowledge with the world .'
@@ -55,7 +61,7 @@ function Layout({ children }) {
   return (
     <>
       <nav className="navbar">
-        <Link to="/">Kids Write</Link>
+        <Link to="/"><img src="https://i.ibb.co/Vt9YZRD/crayon.png" width="15px" height="17px" className="icon-right-logo" />Kids Write</Link>
         <ul className="nav">
           <li><Link to="/posts">Posts</Link></li>
           {user ? (

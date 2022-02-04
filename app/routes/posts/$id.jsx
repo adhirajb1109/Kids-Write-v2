@@ -8,9 +8,9 @@ export const loader = async ({ params, request }) => {
         where: { id: params.id },
     });
     const comments = await prisma.comment.findMany({
-        where: {postId: params.id}
+        where: { postId: params.id }
     })
-    const data = { post, user,comments };
+    const data = { post, user, comments };
     return data
 }
 export const action = async ({ request, params }) => {
@@ -27,7 +27,7 @@ export const action = async ({ request, params }) => {
     }
 }
 function Post() {
-    const { post, user,comments } = useLoaderData();
+    const { post, user, comments } = useLoaderData();
     return (
         <div>
             <div className="page-header">
@@ -42,25 +42,28 @@ function Post() {
                     <>
                         <form method='POST'>
                             <input type='hidden' name='_method' value='delete' />
-                            <button className='btn btn-delete'>Delete</button>
+                            <button className='btn'>Delete <i className="far fa-trash-alt icon"></i></button>
                         </form>
-                        <Link to={`/posts/update/${post.id}`} className="btn">Update</Link>
+                        <Link to={`/posts/update/${post.id}`} className="btn">Update <i className="fas fa-edit icon"></i></Link>
                     </>
                 )}
                 <form method='POST' action={`/posts/${post.id}/like`}>
-                    <button className='btn btn-reverse' type="submit">🖤 {post.likes}</button>
+                    <button className='btn' type="submit"><i class="fas fa-thumbs-up icon-right"></i>{post.likes}</button>
                 </form>
             </div>
-            <form method='POST' action={`/posts/${post.id}/comment`}>
-                    <div className="form-control">
-                        <label htmlFor="comment">Comment : </label>
-                        <input type="text" name="comment" id="comment" required />
-                    </div>
-                    <button className='btn' type="submit">Add Comment</button>
-            </form>
             <br />
-            <h2>Comments</h2>
-            {comments.map((comment) => <p className="post-content">{comment.body}</p>)}
+            <div className="post-content">
+                <form method='POST' action={`/posts/${post.id}/comment`}>
+                <div className="form-control">
+                    <h2><label htmlFor="comment">Add Comment : </label></h2>
+                    <input type="text" name="comment" id="comment" required />
+                </div>
+                    <button className='btn' type="submit">Add <i class="fas fa-plus icon"></i></button>
+                </form>
+                <br />
+                <h2>Comments</h2>
+                {comments.map(comment => (<p className="post-content">{comment.body}</p>))}
+            </div>
         </div>
     );
 }

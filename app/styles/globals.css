@@ -99,20 +99,6 @@ p {
   width: 100%;
 }
 
-.btn-delete {
-  display: inline-block;
-  background: darkred;
-  color: #fff;
-  border-color: darkred;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 15px;
-  font-family: inherit;
-}
-
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -214,4 +200,19 @@ p {
 
 .auth-container fieldset label {
   margin-right: 10px;
+}
+
+.icon {
+  margin-left: 5px;
+}
+
+.icon-right {
+  margin-right: 5px;
+}
+.icon-right-logo {
+  margin-right: 7px;
+}
+hr {
+  margin-top: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
 }
