@@ -28,7 +28,7 @@ function Login() {
     return (
         <div className="auth-container">
             <div className="page-header">
-                <h1>Login</h1>
+                <h1>Register / Login</h1>
             </div>
             <div className="page-content">
                 <form method="post">

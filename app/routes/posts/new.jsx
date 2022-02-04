@@ -21,7 +21,6 @@ function NewPost() {
         <>
             <div className="page-header">
                 <h1>New Post</h1>
-                <Link to="/posts" className="btn btn-reverse">Back</Link>
             </div>
             <div className="page-content">
                 <form method="post">
@@ -34,7 +33,7 @@ function NewPost() {
                         <textarea name="body" id="body" rows="10" required></textarea>
                     </div>
                     <button type="submit" className="btn btn-block">
-                        Add Post
+                        Add <i class="fas fa-plus icon"></i>
                     </button>
                 </form>
             </div>

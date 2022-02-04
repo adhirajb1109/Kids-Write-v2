@@ -31,7 +31,6 @@ function UpdatePost() {
         <>
             <div className="page-header">
                 <h1>Update Post</h1>
-                <Link to="/posts" className="btn btn-reverse">Back</Link>
             </div>
             <div className="page-content">
                 <form method="post">
@@ -44,7 +43,7 @@ function UpdatePost() {
                         <textarea name="body" id="body" rows="10" defaultValue={post.body} required></textarea>
                     </div>
                     <button type="submit" className="btn btn-block">
-                        Update Post
+                        Update <i className="fas fa-edit"></i>
                     </button>
                 </form>
             </div>

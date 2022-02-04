@@ -32,7 +32,6 @@ function Post() {
         <div>
             <div className="page-header">
                 <h1>{post.title}</h1>
-                <Link to="/posts" className="btn btn-reverse">Back</Link>
             </div>
             <div className="page-content">
                 <p className="post-content">{post.body}</p>
@@ -42,9 +41,9 @@ function Post() {
                     <>
                         <form method='POST'>
                             <input type='hidden' name='_method' value='delete' />
-                            <button className='btn'>Delete <i className="far fa-trash-alt icon"></i></button>
+                            <button className='btn'><i className="far fa-trash-alt"></i></button>
                         </form>
-                        <Link to={`/posts/update/${post.id}`} className="btn">Update <i className="fas fa-edit icon"></i></Link>
+                        <Link to={`/posts/update/${post.id}`} className="btn"><i className="fas fa-edit"></i></Link>
                     </>
                 )}
                 <form method='POST' action={`/posts/${post.id}/like`}>
