@@ -1,0 +1,45 @@
+import { Link, redirect } from "remix";
+import { PrismaClient } from '@prisma/client';
+import { getUser } from "~/utils/session.server";
+const prisma = new PrismaClient();
+export const loader = async ({ request }) => {
+    const user = await getUser(request);
+    if (user === null) throw new Response("Unauthorized", { status: 401 });
+    return {};
+}
+export const action = async ({ request }) => {
+    const form = await request.formData();
+    const title = form.get('title');
+    const body = form.get('body');
+    const user = await getUser(request);
+    const fields = { title, body };
+    const post = await prisma.post.create({ data: { userId: user.id, ...fields } });
+    return redirect(`/posts/${post.id}`);
+}
+function NewPost() {
+    return (
+        <>
+            <div className="page-header">
+                <h1>New Post</h1>
+                <Link to="/posts" className="btn btn-reverse">Back</Link>
+            </div>
+            <div className="page-content">
+                <form method="post">
+                    <div className="form-control">
+                        <label htmlFor="title">Title :</label>
+                        <input type="text" name="title" id="title" required />
+                    </div>
+                    <div className="form-control">
+                        <label htmlFor="body">Body :</label>
+                        <textarea name="body" id="body" rows="10" required></textarea>
+                    </div>
+                    <button type="submit" className="btn btn-block">
+                        Add Post
+                    </button>
+                </form>
+            </div>
+        </>
+    );
+}
+
+export default NewPost;
