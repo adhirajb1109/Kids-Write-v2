@@ -43,26 +43,35 @@ function Post() {
                             <button className='btn'><i className="far fa-trash-alt"></i></button>
                         </form>
                         <Link to={`/posts/update/${post.id}`} className="btn"><i className="fas fa-edit"></i></Link>
+                        <form method='POST' action={`/posts/${post.id}/like`}>
+                            <button className='btn' type="submit"><i class="fas fa-thumbs-up icon-right"></i>{post.likes}</button>
+                        </form>
                     </>
                 )}
-                <form method='POST' action={`/posts/${post.id}/like`}>
-                    <button className='btn' type="submit"><i class="fas fa-thumbs-up icon-right"></i>{post.likes}</button>
-                </form>
             </div>
-            <br />
-            <div className="post-content">
-                <form method='POST' action={`/posts/${post.id}/comment`}>
-                <div className="form-control">
-                    <h2><label htmlFor="comment">Add Comment : </label></h2>
-                    <input type="text" name="comment" id="comment" required />
-                </div>
-                    <button className='btn' type="submit">Add <i class="fas fa-plus icon"></i></button>
-                </form>
-                <br />
-                <h2>Comments</h2>
-                {comments.map(comment => (<p className="post-content">{comment.body}</p>))}
-            </div>
-            <br />
+            {user && user.id === post.userId && (
+                <>
+                    <br />
+                    <div className="post-content">
+                        <form method='POST' action={`/posts/${post.id}/comment`}>
+                            <div className="form-control">
+                                <h2><label htmlFor="comment">Add Comment : </label></h2>
+                                <input type="text" name="comment" id="comment" required />
+                            </div>
+                            <button className='btn' type="submit">Add <i class="fas fa-plus icon"></i></button>
+                        </form>
+                        <br />
+                        <h2>Comments</h2>
+                        {comments.map(comment => (
+                            <p className="post-content">
+                                {comment.body}
+                            </p>
+                        ))}
+                    </div>
+                    <br />
+                </>
+            )}
+
         </div>
     );
 }

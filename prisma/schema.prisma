@@ -23,10 +23,11 @@ model Post {
 }
 
 model User {
-  id       String @id @default(cuid())
+  id       String    @id @default(cuid())
   username String
   password String
   posts    Post[]
+  comments Comment[]
 }
 
 model Comment {
@@ -34,4 +35,6 @@ model Comment {
   body   String
   postId String
   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

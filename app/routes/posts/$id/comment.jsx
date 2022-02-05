@@ -1,11 +1,21 @@
 import { redirect } from 'remix'
 import { db } from "~/utils/db.server";
-export const action = async ({ params , request}) => {
+import { getUser } from "~/utils/session.server";
+export const action = async ({ params, request }) => {
     const form = await request.formData();
     const comment = form.get('comment');
+    const user = await getUser(request);
     const post = await db.post.findUnique({
         where: { id: params.id },
     });
-    await db.comment.create({ data: { body: comment, postId: post.id} });
-    return redirect(`/posts/${post.id}`);
+    if (user === null) {
+        throw new Response("Unauthorized", { status: 401 });
+    }
+    else {
+        await db.comment.create({ data: { body: comment, postId: post.id, userId: user.id } });
+        return redirect(`/posts/${post.id}`);
+    }
+}
+export const loader = async () => {
+    return redirect('/posts')
 }
