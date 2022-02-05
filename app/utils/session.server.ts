@@ -1,11 +1,10 @@
 import bcrypt from 'bcrypt'
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import { db } from './db.server'
 import { createCookieSessionStorage, redirect } from 'remix'
 
 // Login user
 export async function login({ username, password }) {
-    const user = await prisma.user.findFirst({
+    const user = await db.user.findFirst({
         where: {
             username,
         },
@@ -24,10 +23,10 @@ export async function login({ username, password }) {
 // Register new user
 export async function register({ username, password }) {
     const passwordHash = await bcrypt.hash(password, 10)
-    return prisma.user.create({
+    return db.user.create({
         data: {
             username,
-            password: passwordHash,
+            password:passwordHash,
         },
     })
 }
@@ -52,7 +51,7 @@ const storage = createCookieSessionStorage({
 })
 
 // Create user session
-export async function createUserSession(userId, redirectTo) {
+export async function createUserSession(userId: string, redirectTo: string) {
     const session = await storage.getSession()
     session.set('userId', userId)
     return redirect(redirectTo, {
@@ -63,12 +62,12 @@ export async function createUserSession(userId, redirectTo) {
 }
 
 // Get user session
-export function getUserSession(request) {
+export function getUserSession(request: Request) {
     return storage.getSession(request.headers.get('Cookie'))
 }
 
 // Get logged in user
-export async function getUser(request) {
+export async function getUser(request: Request) {
     const session = await getUserSession(request)
     const userId = session.get('userId')
     if (!userId || typeof userId !== 'string') {
@@ -76,7 +75,7 @@ export async function getUser(request) {
     }
 
     try {
-        const user = await prisma.user.findUnique({ where: { id: userId } })
+        const user = await db.user.findUnique({ where: { id: userId } })
         return user
     } catch (error) {
         return null
@@ -84,7 +83,7 @@ export async function getUser(request) {
 }
 
 // Logout user and destroy session
-export async function logout(request) {
+export async function logout(request: Request) {
     const session = await storage.getSession(request.headers.get('Cookie'))
     return redirect('/auth/logout', {
         headers: {

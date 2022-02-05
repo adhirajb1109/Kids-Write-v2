@@ -1,6 +1,5 @@
 import { createUserSession, login, register } from "~/utils/session.server";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { db } from "~/utils/db.server";
 export const action = async ({ request }) => {
     const form = await request.formData();
     const authType = form.get('authType');
@@ -8,7 +7,7 @@ export const action = async ({ request }) => {
     const password = form.get('password').trim();
     switch (authType) {
         case 'register': {
-            const userExists = await prisma.user.findFirst({
+            const userExists = await db.user.findFirst({
                 where: {
                     username,
                 },

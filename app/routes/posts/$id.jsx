@@ -1,13 +1,12 @@
 import { useLoaderData, Link, redirect } from "remix";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 export const loader = async ({ params, request }) => {
     const user = await getUser(request)
-    const post = await prisma.post.findUnique({
+    const post = await db.post.findUnique({
         where: { id: params.id },
     });
-    const comments = await prisma.comment.findMany({
+    const comments = await db.comment.findMany({
         where: { postId: params.id }
     })
     const data = { post, user, comments };
@@ -15,13 +14,13 @@ export const loader = async ({ params, request }) => {
 }
 export const action = async ({ request, params }) => {
     const form = await request.formData()
-    const post = await prisma.post.findUnique({
+    const post = await db.post.findUnique({
         where: { id: params.id },
     })
     const user = await getUser(request)
     if (form.get('_method') === 'delete') {
         if (user && post.userId === user.id) {
-            await prisma.post.delete({ where: { id: params.id } })
+            await db.post.delete({ where: { id: params.id } })
         }
         return redirect('/posts')
     }
@@ -63,6 +62,7 @@ function Post() {
                 <h2>Comments</h2>
                 {comments.map(comment => (<p className="post-content">{comment.body}</p>))}
             </div>
+            <br />
         </div>
     );
 }

@@ -1,7 +1,6 @@
 import { Link, redirect } from "remix";
-import { PrismaClient } from '@prisma/client';
+import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
-const prisma = new PrismaClient();
 export const loader = async ({ request }) => {
     const user = await getUser(request);
     if (user === null) throw new Response("Unauthorized", { status: 401 });
@@ -13,7 +12,7 @@ export const action = async ({ request }) => {
     const body = form.get('body');
     const user = await getUser(request);
     const fields = { title, body };
-    const post = await prisma.post.create({ data: { userId: user.id, ...fields } });
+    const post = await db.post.create({ data: { userId: user.id, ...fields } });
     return redirect(`/posts/${post.id}`);
 }
 function NewPost() {

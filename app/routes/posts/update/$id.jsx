@@ -1,10 +1,9 @@
 import { Link, redirect, useLoaderData } from "remix";
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 export const loader = async ({ params, request }) => {
     const user = await getUser(request)
-    const post = await prisma.post.findUnique({
+    const post = await db.post.findUnique({
         where: { id: params.id },
     })
     if (!post) throw new Error('Post not found')
@@ -16,12 +15,12 @@ export const action = async ({ request, params }) => {
     const title = form.get('title');
     const body = form.get('body');
     const fields = { title, body };
-    const post = await prisma.post.findUnique({
+    const post = await db.post.findUnique({
         where: { id: params.id },
     })
     const user = await getUser(request)
     if (user && post.userId === user.id) {
-        await prisma.post.update({ data: fields, where: { id: params.id } });
+        await db.post.update({ data: fields, where: { id: params.id } });
     }
     return redirect(`/posts/${post.id}`);
 }

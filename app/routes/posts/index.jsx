@@ -1,10 +1,9 @@
 import { useLoaderData, Link } from "remix";
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 export const loader = async ({ request }) => {
     const data = {
-        posts: await prisma.post.findMany({
+        posts: await db.post.findMany({
             orderBy: { createdAt: 'desc' },
             select: { title: true, id: true, createdAt: true, updatedAt: true, user: true },
         }),
