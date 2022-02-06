@@ -8,8 +8,11 @@ export const loader = async ({ params, request }) => {
     });
     const comments = await db.comment.findMany({
         where: { postId: params.id }
-    })
-    const data = { post, user, comments };
+    });
+    const author = await db.user.findUnique({
+        where: { id: post.userId }
+    });
+    const data = { post, user, comments, author };
     return data
 }
 export const action = async ({ request, params }) => {
@@ -26,12 +29,14 @@ export const action = async ({ request, params }) => {
     }
 }
 function Post() {
-    const { post, user, comments } = useLoaderData();
+    const { post, user, comments, author } = useLoaderData();
     return (
         <div>
             <div className="page-header">
                 <h1>{post.title}</h1>
             </div>
+            <h2>Written By {author.username}</h2>
+            <br />
             <div className="page-content">
                 <p className="post-content">{post.body}</p>
             </div>
