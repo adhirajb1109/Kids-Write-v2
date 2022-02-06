@@ -61,7 +61,7 @@ function Layout({ children }) {
   return (
     <>
       <nav className="navbar">
-        <Link to="/"><img src="https://i.ibb.co/Vt9YZRD/crayon.png" width="15px" height="17px" className="icon-right-logo" />Kids Write</Link>
+        <Link to="/"><img src="https://i.ibb.co/Vt9YZRD/crayon.png" width="15px" height="15px" className="icon-right-logo" />Kids Write</Link>
         <ul className="nav">
           <li><Link to="/posts">Posts</Link></li>
           {user ? (
