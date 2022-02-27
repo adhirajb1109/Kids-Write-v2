@@ -47,9 +47,13 @@ function Post() {
                             <input type='hidden' name='_method' value='delete' />
                             <button className='btn'><i className="far fa-trash-alt"></i></button>
                         </form>
-                        <Link to={`/posts/update/${post.id}`} className="btn"><i className="fas fa-edit"></i></Link>
+                        <Link to={`/posts/update/${post.id}`} className="btn">
+                            <i className="fas fa-edit"></i>
+                        </Link>
                         <form method='POST' action={`/posts/${post.id}/like`}>
-                            <button className='btn' type="submit"><i class="fas fa-thumbs-up icon-right"></i>{post.likes}</button>
+                            <button className='btn' type="submit">
+                                <i class="fas fa-thumbs-up icon-right"></i>{post.likes}
+                            </button>
                         </form>
                     </>
                 )}
@@ -69,6 +73,7 @@ function Post() {
                         <h2>Comments</h2>
                         {comments.map(comment => (
                             <p className="post-content">
+                                <span className="comment-user">{comment.username}</span>
                                 {comment.body}
                             </p>
                         ))}

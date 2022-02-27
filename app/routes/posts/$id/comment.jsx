@@ -12,7 +12,7 @@ export const action = async ({ params, request }) => {
         throw new Response("Unauthorized", { status: 401 });
     }
     else {
-        await db.comment.create({ data: { body: comment, postId: post.id, userId: user.id } });
+        await db.comment.create({ data: { body: comment, postId: post.id, username: user.username } });
         return redirect(`/posts/${post.id}`);
     }
 }

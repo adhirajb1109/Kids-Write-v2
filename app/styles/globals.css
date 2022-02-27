@@ -216,3 +216,8 @@ hr {
   margin-top: 30px;
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
+.comment-user {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}

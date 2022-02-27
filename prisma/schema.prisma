@@ -24,7 +24,7 @@ model Post {
 
 model User {
   id       String    @id @default(cuid())
-  username String
+  username String   @unique
   password String
   posts    Post[]
   comments Comment[]
@@ -35,6 +35,6 @@ model Comment {
   body   String
   postId String
   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  username String
+  user   User   @relation(fields: [username], references: [username], onDelete: Cascade)
 }
