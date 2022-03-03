@@ -47,6 +47,7 @@ function Login() {
                     </p>
                 ) : null}
             </div>
+            <br />
             <div className="page-content">
                 <form method="post">
                     <fieldset>

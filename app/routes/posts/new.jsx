@@ -31,7 +31,7 @@ function NewPost() {
                         <label htmlFor="body">Body :</label>
                         <textarea name="body" id="body" rows="10" required></textarea>
                     </div>
-                    <button type="submit" className="btn btn-block">
+                   <button type="submit" className="btn btn-block">
                         Add <i class="fas fa-plus icon"></i>
                     </button>
                 </form>

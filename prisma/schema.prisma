@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("PRISMA_DATA_PROXY_URL")
 }
 
 model Post {
@@ -24,17 +24,17 @@ model Post {
 
 model User {
   id       String    @id @default(cuid())
-  username String   @unique
+  username String    @unique
   password String
   posts    Post[]
   comments Comment[]
 }
 
 model Comment {
-  id     String @id @default(cuid())
-  body   String
-  postId String
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  id       String @id @default(cuid())
+  body     String
+  postId   String
+  post     Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   username String
-  user   User   @relation(fields: [username], references: [username], onDelete: Cascade)
+  user     User   @relation(fields: [username], references: [username], onDelete: Cascade)
 }
