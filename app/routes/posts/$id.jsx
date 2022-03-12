@@ -15,19 +15,6 @@ export const loader = async ({ params, request }) => {
     const data = { post, user };
     return data
 }
-export const action = async ({ request, params }) => {
-    const form = await request.formData()
-    const post = await db.post.findUnique({
-        where: { id: params.id },
-    })
-    const user = await getUser(request)
-    if (form.get('_method') === 'delete') {
-        if (user && post.userId === user.id) {
-            await db.post.delete({ where: { id: params.id } })
-        }
-        return redirect('/posts')
-    }
-}
 function Post() {
     const { post, user } = useLoaderData();
     return (
@@ -43,13 +30,14 @@ function Post() {
             <div className="page-footer">
                 {user && user.id === post.userId && (
                     <>
-                        <form method='POST'>
-                            <input type='hidden' name='_method' value='delete' />
-                            <button className='btn'><i className="far fa-trash-alt"></i></button>
-                        </form>
                         <Link to={`/posts/update/${post.id}`} className="btn">
                             <i className="fas fa-edit"></i>
                         </Link>
+                        <form method='POST' action={`/posts/delete/${post.id}`}>
+                            <button className='btn' type="submit">
+                                <i className="far fa-trash-alt"></i>
+                            </button>
+                        </form>
                         <form method='POST' action={`/posts/${post.id}/like`}>
                             <button className='btn' type="submit">
                                 <i class="fas fa-thumbs-up icon-right"></i>{post.likes}
