@@ -79,6 +79,7 @@ p {
   text-decoration: none;
   font-size: 15px;
   font-family: inherit;
+  font-weight: bold;
 }
 
 .btn-reverse {
@@ -209,25 +210,32 @@ p {
 .icon-right {
   margin-right: 5px;
 }
+
 .icon-right-logo {
   margin-right: 7px;
 }
+
 hr {
   margin-top: 30px;
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
+
 .comment-user {
   display: inline-block;
   font-weight: bold;
   margin-bottom: 5px;
 }
+
 .comment-time {
   margin-left: 10px;
   border-radius: 5px;
   padding: 5px 10px;
   background: #000;
   color: #fff;
+  font-size: 13px;
+  font-weight: bold;
 }
+
 .comment-content {
   display: block;
   margin-top: 10px;
