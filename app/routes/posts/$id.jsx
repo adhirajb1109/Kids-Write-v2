@@ -5,14 +5,14 @@ export const loader = async ({ params, request }) => {
     const user = await getUser(request)
     const post = await db.post.findUnique({
         where: { id: params.id },
+        include: {
+            user: true,
+            comments: {
+                include: { user: true }
+            }
+        },
     });
-    const comments = await db.comment.findMany({
-        where: { postId: params.id }
-    });
-    const author = await db.user.findUnique({
-        where: { id: post.userId }
-    });
-    const data = { post, user, comments, author };
+    const data = { post, user };
     return data
 }
 export const action = async ({ request, params }) => {
@@ -29,13 +29,13 @@ export const action = async ({ request, params }) => {
     }
 }
 function Post() {
-    const { post, user, comments, author } = useLoaderData();
+    const { post, user } = useLoaderData();
     return (
         <div>
             <div className="page-header">
                 <h1>{post.title}</h1>
             </div>
-            <h2>Written By {author.username}</h2>
+            <h2>Written By {post.user.username}</h2>
             <br />
             <div className="page-content">
                 <p className="post-content">{post.body}</p>
@@ -71,9 +71,9 @@ function Post() {
                         </form>
                         <br />
                         <h2>Comments</h2>
-                        {comments.map(comment => (
+                        {post.comments.map(comment => (
                             <p className="post-content">
-                                <span className="comment-user">{comment.username}</span>
+                                <span className="comment-user">{comment.user.username}</span>
                                 {comment.body}
                             </p>
                         ))}
@@ -81,7 +81,6 @@ function Post() {
                     <br />
                 </>
             )}
-
         </div>
     );
 }

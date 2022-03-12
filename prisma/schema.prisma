@@ -31,10 +31,10 @@ model User {
 }
 
 model Comment {
-  id       String @id @default(cuid())
-  body     String
-  postId   String
-  post     Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  username String
-  user     User   @relation(fields: [username], references: [username], onDelete: Cascade)
+  id     String @id @default(cuid())
+  body   String
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
