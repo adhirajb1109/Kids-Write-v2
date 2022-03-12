@@ -1,6 +1,7 @@
 import { useLoaderData, Link, redirect } from "remix";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
+import moment from "moment";
 export const loader = async ({ params, request }) => {
     const user = await getUser(request)
     const post = await db.post.findUnique({
@@ -61,8 +62,15 @@ function Post() {
                         <h2>Comments</h2>
                         {post.comments.map(comment => (
                             <p className="post-content">
-                                <span className="comment-user">{comment.user.username}</span>
-                                {comment.body}
+                                <span className="comment-user">
+                                    {comment.user.username}
+                                </span>
+                                <span className="comment-time">
+                                    {moment(comment.createdAt).format('LL')}
+                                </span>
+                                <span className="comment-content">
+                                    {comment.body}
+                                </span>
                             </p>
                         ))}
                     </div>

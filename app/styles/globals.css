@@ -217,7 +217,18 @@ hr {
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
 .comment-user {
-  display: block;
+  display: inline-block;
   font-weight: bold;
   margin-bottom: 5px;
+}
+.comment-time {
+  margin-left: 10px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background: #000;
+  color: #fff;
+}
+.comment-content {
+  display: block;
+  margin-top: 10px;
 }

@@ -1,11 +1,14 @@
 import { useLoaderData, Link } from "remix";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
+import moment from "moment";
 export const loader = async ({ request }) => {
     const data = {
         posts: await db.post.findMany({
             orderBy: { createdAt: 'desc' },
-            select: { title: true, id: true, createdAt: true, updatedAt: true, user: true },
+            include: {
+                user: true
+            }
         }),
         user: await getUser(request),
     };
@@ -24,8 +27,7 @@ function PostItems() {
                     <li key={post.id}>
                         <Link to={post.id}>
                             <h3>{post.title}</h3>
-                            Created At - {new Date(post.createdAt).toLocaleDateString()}<br />
-                            Last Updated At - {new Date(post.updatedAt).toLocaleTimeString()} , {new Date(post.updatedAt).toLocaleDateString()}<br />
+                            Created At - {moment(post.createdAt).format('LL')}<br />
                             Written By - {post.user.username}
                         </Link>
                     </li>
