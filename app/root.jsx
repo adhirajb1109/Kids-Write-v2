@@ -1,5 +1,5 @@
 import { Link, LiveReload, Outlet, Links, Meta, useLoaderData } from "remix";
-import styles from "~/styles/globals.css";
+import styles from "~/styles/css/globals.css";
 import { getUser } from '~/utils/session.server';
 export const links = () => [{
   rel: "stylesheet",
